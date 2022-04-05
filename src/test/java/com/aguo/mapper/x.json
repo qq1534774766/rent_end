@@ -1,0 +1,224 @@
+[
+  RenterItemVol
+  {
+    uRole=URole
+  {
+    roleId=2,
+    name=
+    'manage',
+    description=
+    '房东',
+    createdTime=Thu
+    Nov
+    11
+    15: 24
+    :
+    48
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Thu
+    Nov
+    11
+    19: 19
+    :
+    58
+    GMT
+    +
+    08: 00
+    2021
+  },
+  uUser=UUser
+  {
+    userId=1,
+    roleId=2,
+    username=
+    'admin',
+    password=
+    '',
+    sex=
+    '2',
+    name=
+    'admin',
+    phoneNumber=
+    '18127226035',
+    identity=
+    'null',
+    locked=
+    '0',
+    enable=
+    '1',
+    createdTime=Sat
+    Nov
+    13
+    06: 39
+    :
+    54
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Sat
+    Nov
+    13
+    06: 39
+    :
+    54
+    GMT
+    +
+    08: 00
+    2021,
+    roles=null
+  },
+  rentState=false
+  },
+  RenterItemVol
+  {
+    uRole=URole
+  {
+    roleId=1,
+    name=
+    'client',
+    description=
+    '客户身份',
+    createdTime=Thu
+    Nov
+    11
+    13: 46
+    :
+    13
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Thu
+    Nov
+    11
+    13: 46
+    :
+    13
+    GMT
+    +
+    08: 00
+    2021
+  },
+  uUser=UUser
+  {
+    userId=2,
+    roleId=1,
+    username=
+    'cola',
+    password=
+    '',
+    sex=
+    '2',
+    name=
+    'cola',
+    phoneNumber=
+    '12345678912',
+    identity=
+    'null',
+    locked=
+    '0',
+    enable=
+    '1',
+    createdTime=Sat
+    Nov
+    13
+    08: 12
+    :
+    27
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Sat
+    Nov
+    13
+    08: 36
+    :
+    41
+    GMT
+    +
+    08: 00
+    2021,
+    roles=null
+  },
+  rentState=true
+  },
+  RenterItemVol
+  {
+    uRole=URole
+  {
+    roleId=2,
+    name=
+    'manage',
+    description=
+    '房东',
+    createdTime=Thu
+    Nov
+    11
+    15: 24
+    :
+    48
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Thu
+    Nov
+    11
+    19: 19
+    :
+    58
+    GMT
+    +
+    08: 00
+    2021
+  },
+  uUser=UUser
+  {
+    userId=3,
+    roleId=2,
+    username=
+    'aaa广财',
+    password=
+    '',
+    sex=
+    '2',
+    name=
+    'aaa广财',
+    phoneNumber=
+    '18127226035',
+    identity=
+    'null',
+    locked=
+    '0',
+    enable=
+    '1',
+    createdTime=Sat
+    Nov
+    13
+    09: 58
+    :
+    53
+    GMT
+    +
+    08: 00
+    2021,
+    updateTime=Sat
+    Nov
+    13
+    09: 58
+    :
+    53
+    GMT
+    +
+    08: 00
+    2021,
+    roles=null
+  },
+  rentState=false
+  }
+]

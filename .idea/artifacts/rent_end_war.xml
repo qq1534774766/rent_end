@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="rent_end:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>rent_end</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="rent_end-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="rent_end:war exploded" />
+    </root>
+  </artifact>
+</component>
