@@ -24,13 +24,7 @@ public class RenterController {
     private URoleDao uRoleDao;
     @Autowired
     private RenterService renterService;
-    @Autowired
-    private RentingService rentingService;
 
-//    @RequestMapping("/listRenterItemVol")
-//    public List<RenterItemVol> listRenterItemVol(PageParam pageParams){
-//        return renterService.listRenterItemVol( pageParams);
-//    }
 
     /** 分页查询租客的所有信息
      * 尝试统一返回格式
@@ -67,9 +61,13 @@ public class RenterController {
         return renterService.addRenter(uUser);
     }
 
-    @GetMapping("/listRole")
-    public Collection<URole> listRole(){
-        return uRoleDao.selectList(new QueryWrapper<>());
+    /**
+     * 获取所有租客角色
+     * @return
+     */
+    @GetMapping("/role")
+    public ApiResponse listRole(){
+        return ApiResponse.success(uRoleDao.selectList(null));
     }
 
     /**

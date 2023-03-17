@@ -50,9 +50,9 @@ public class RenterServiceImpl implements RenterService {
         //新建一个page对象
         Page<UUserVol> page = new Page<>(pageNo, pageSize);
         LambdaQueryWrapper<UUserVol> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(renterParam.getUsername()),UUserVol::getUsername,renterParam.getUsername())
-                .eq(NumberUntil.isNumber(renterParam.getName()),UUserVol::getName,renterParam.getName())
-                .eq(NumberUntil.isNumber(renterParam.getPhoneNumber()),UUserVol::getPhoneNumber,renterParam.getPhoneNumber());
+        queryWrapper.like(StringUtils.isNotBlank(renterParam.getUsername()),UUserVol::getUsername,renterParam.getUsername())
+                .like(NumberUntil.isNumber(renterParam.getName()),UUserVol::getName,renterParam.getName())
+                .like(NumberUntil.isNumber(renterParam.getPhoneNumber()),UUserVol::getPhoneNumber,renterParam.getPhoneNumber());
         uUserVolDao.selectPage(page,queryWrapper);
         List<UUserVol> list1 = page.getRecords();
         for (UUserVol uUserVol : list1) {
