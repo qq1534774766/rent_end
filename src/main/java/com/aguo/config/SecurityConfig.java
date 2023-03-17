@@ -51,8 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/manage/**").access("hasAnyRole('manage','admin')")
-                .antMatchers("/admin/**").access("hasAnyRole('admin')")
+//                .antMatchers("/manage/**").access("hasAnyRole('manage','admin')")
+//                .antMatchers("/admin/**").access("hasAnyRole('admin')")
+                .antMatchers("/manage/**").permitAll()
+                .antMatchers("/admin/**").permitAll()
                 .anyRequest().authenticated() // 用户访问其它URL都必须认证后访问（登录后访问）
                 .and().formLogin()
                 .loginPage("/").loginProcessingUrl("/login").permitAll()

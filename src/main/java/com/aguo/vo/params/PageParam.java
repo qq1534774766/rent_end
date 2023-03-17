@@ -1,4 +1,4 @@
-package com.aguo.vo;
+package com.aguo.vo.params;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description: TODO
  */
 @Data
-public class PageParams {
+public class PageParam {
     private Integer page=1;
     private Integer pageSize=10;
 }
