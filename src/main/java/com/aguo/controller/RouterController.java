@@ -11,14 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 路由控制器
+ * @author Administrator
+ */
 @Controller
 public class RouterController {
-    //公开
+    /**
+     * 前端页面路由
+     * @return
+     */
     @RequestMapping({"/","index.html","toLogin"})
+    @ResponseBody
     public  String toIndex(){
-        return "index";
+//        return "index";
+        return "<h3>欢迎使用出租房管理系统后端API，请通过前端访问！</h3>";
     }
-    //公开
+
+    /**
+     * 登录控制器
+     * @param username
+     * @param rememberMe
+     * @param resp
+     * @return
+     */
     @RequestMapping("/loginSuccess")
     @ResponseBody
     public Map<String, String> loginSuccess(String username,Boolean rememberMe,HttpServletResponse resp){
@@ -29,7 +45,12 @@ public class RouterController {
         map.put("username",username);
         return map;
     }
-    //公开
+
+    /**
+     * 登录错误处理器
+     * @param request
+     * @return
+     */
     @RequestMapping("/loginError")
     @ResponseBody
     public Map<String, String> loginError(HttpServletRequest request){

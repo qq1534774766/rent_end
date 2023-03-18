@@ -1,6 +1,7 @@
 package com.aguo.service.impl;
 
 import com.aguo.dao.URoleDao;
+import com.aguo.dao.UUserDao;
 import com.aguo.dao.UUserVolDao;
 import com.aguo.entity.Renting;
 import com.aguo.entity.URole;
@@ -10,6 +11,7 @@ import com.aguo.entity.vol.UUserVol;
 import com.aguo.service.RenterService;
 import com.aguo.service.UUserService;
 import com.aguo.untils.NumberUntil;
+import com.aguo.untils.ValidatorUtil;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RenterParam;
@@ -18,13 +20,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -42,6 +47,8 @@ public class RenterServiceImpl implements RenterService {
     private RentingServiceImpl rentingService;
     @Autowired
     private UUserVolDao uUserVolDao;
+    @Autowired
+    private UUserDao uUserDao;
 
     @Override
     public ApiResponse listRenterItemVol(Integer pageNo, Integer pageSize, RenterParam renterParam) {
@@ -86,7 +93,7 @@ public class RenterServiceImpl implements RenterService {
                 return ApiResponse.error("身份证格式错误");
             }
         }
-        return uUserService.addUser(uUser)?ApiResponse.success(null):ApiResponse.error("用户名已存在");
+        return ApiResponse.booleanResponse(uUserService.addUser(uUser),"用户名已存在");
     }
 
     @Override
@@ -97,7 +104,7 @@ public class RenterServiceImpl implements RenterService {
         wrapper.eq("USER_ID",userId);
         rentingService.remove(wrapper);
 //      删除用户
-        return uUserService.removeById(userId)?ApiResponse.success():ApiResponse.error("删除失败");
+        return ApiResponse.booleanResponse(uUserService.removeById(userId),"删除失败");
     }
 
     @Override
@@ -110,4 +117,38 @@ public class RenterServiceImpl implements RenterService {
         return uUserVolDao.selectList(null);
     }
 
+    @Override
+    public ApiResponse updateRenter(UUser uUser) {
+        if(!isValid(uUser)) {
+            String errorMsg = "用户信息校验不通过";
+            return ApiResponse.error(errorMsg);
+        }
+        UUserVol uUserVol = new UUserVol();
+        //手动映射，确保数据准确
+        uUser.setUserId(uUser.getUserId());
+        uUser.setUsername(uUser.getUsername().trim());
+        uUser.setPassword(StringUtils.isBlank(uUser.getPassword())?null:new BCryptPasswordEncoder().encode(uUser.getPassword()));
+        uUser.setName(uUser.getName().trim());
+        uUser.setPhoneNumber(uUser.getPhoneNumber().trim());
+        uUser.setIdentity(uUser.getIdentity().trim());
+        uUser.setUpdateTime(new Date());
+        return ApiResponse.booleanResponse(uUserDao.updateById(uUser)>0);
+    }
+
+    /**
+     * 用户信息合法性校验
+     * @param uUser
+     * @return
+     */
+    private boolean isValid(UUser uUser){
+        return (
+                //校验用户名
+                ValidatorUtil.validateUsername(uUser.getUsername())
+                //校验手机号
+                && ValidatorUtil.validatePhone(uUser.getPhoneNumber())
+                //校验身份证号
+                && (StringUtils.isBlank(uUser.getIdentity())|| ValidatorUtil.validateIdCard(uUser.getIdentity())))
+                //校验密码
+                && (StringUtils.isBlank(uUser.getPassword())|| ValidatorUtil.validatePassword(uUser.getPassword() ));
+    }
 }

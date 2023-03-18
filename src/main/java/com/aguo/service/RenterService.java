@@ -53,4 +53,11 @@ public interface RenterService {
      * @return
      */
     ApiResponse listRenterItemVol(Integer page, Integer pageSize, RenterParam renterParam);
+
+    /**
+     * 更新租客
+     * @param uUser
+     * @return
+     */
+    ApiResponse updateRenter(UUser uUser);
 }

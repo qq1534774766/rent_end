@@ -1,22 +1,19 @@
 package com.aguo.controller.renter;
 
 import com.aguo.dao.URoleDao;
-import com.aguo.entity.URole;
 import com.aguo.entity.UUser;
-import com.aguo.entity.vol.RenterItemVol;
 import com.aguo.entity.vol.UUserVol;
 import com.aguo.service.RenterService;
-import com.aguo.service.RentingService;
 import com.aguo.vo.ApiResponse;
-import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RenterParam;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 @RestController
 @RequestMapping("/manage")
 public class RenterController {
@@ -31,7 +28,7 @@ public class RenterController {
      * @return
      */
     @GetMapping("/renterItemVolList")
-    public ApiResponse listRenterItemVolv2(@RequestParam("page") Integer page,
+    public ApiResponse listRenterItemVol(@RequestParam("page") Integer page,
                                            @RequestParam("pageSize") Integer pageSize,
                                            RenterParam renterParam){
         return renterService.listRenterItemVol( page,pageSize,renterParam);
@@ -79,5 +76,9 @@ public class RenterController {
     @DeleteMapping("/renter")
     public ApiResponse deleteRenter(@RequestBody UUser uUser){
         return ApiResponse.success(renterService.deleteRenterById(uUser.getUserId()));
+    }
+    @PutMapping("/renter")
+    public ApiResponse updateRenter(@RequestBody UUser uUser){
+        return renterService.updateRenter(uUser);
     }
 }
