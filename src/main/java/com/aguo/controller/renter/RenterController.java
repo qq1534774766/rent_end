@@ -54,7 +54,6 @@ public class RenterController {
      */
     @PostMapping("/renter")
     public ApiResponse addRenter(UUser uUser){
-        System.out.println(uUser);
         return renterService.addRenter(uUser);
     }
 

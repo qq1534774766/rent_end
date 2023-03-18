@@ -1,7 +1,8 @@
 package com.aguo.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.aguo.entity.ArchiBBuilding;
+import com.aguo.vo.ApiResponse;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * 楼房表(ArchiBBuilding)表服务接口
@@ -11,5 +12,12 @@ import com.aguo.entity.ArchiBBuilding;
  */
 public interface ArchiBBuildingService extends IService<ArchiBBuilding> {
 
+    /**
+     * 新增楼盘
+     *
+     * @param archibBuilding
+     * @return
+     */
+    ApiResponse addBuilding(ArchiBBuilding archibBuilding);
 }
 

@@ -4,6 +4,7 @@ import com.aguo.enums.ApiStatueCode;
 import com.aguo.vo.ApiResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Author: wenqiaogang
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @Description: TODO
  */
 @ControllerAdvice
+@ResponseBody
 public class AllExceptionHandler {
     /**
      * 进行异常处理，处理Exception类型的异常
@@ -19,7 +21,6 @@ public class AllExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ApiResponse doException(Exception e) {
-        e.printStackTrace();
         return ApiResponse.error(ApiStatueCode.UNKNOWN_ERROR,"未知错误");
     }
 }

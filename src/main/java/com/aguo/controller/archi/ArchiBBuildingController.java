@@ -26,9 +26,15 @@ public class ArchiBBuildingController {
     public List<ArchiBBuilding> listBuilding() {
         return archiBBuildingService.list();
     }
-    @RequestMapping("/addBuilding")
-    public Boolean addBuilding(ArchiBBuilding archiBBuilding){
-        archiBBuildingService.save(archiBBuilding);
-        return true;
+
+    /**
+     * 新增楼房
+     *
+     * @param archibBuilding
+     * @return
+     */
+    @PostMapping("/building")
+    public ApiResponse addBuilding(@RequestBody ArchiBBuilding archibBuilding) {
+        return archiBBuildingService.addBuilding(archibBuilding);
     }
 }
