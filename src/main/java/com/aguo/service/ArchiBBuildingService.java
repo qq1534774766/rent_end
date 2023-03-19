@@ -2,6 +2,8 @@ package com.aguo.service;
 
 import com.aguo.entity.ArchiBBuilding;
 import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.BuildingParam;
+import com.aguo.vo.params.PageParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -19,5 +21,23 @@ public interface ArchiBBuildingService extends IService<ArchiBBuilding> {
      * @return
      */
     ApiResponse addBuilding(ArchiBBuilding archibBuilding);
+
+    /**
+     * 分页查询楼盘
+     *
+     * @param pageparam
+     * @param buildingParam
+     * @return
+     */
+    ApiResponse listBuilding(PageParam pageparam,
+                             BuildingParam buildingParam);
+
+    /**
+     * 统计楼盘的总数
+     *
+     * @return
+     */
+    @Deprecated
+    ApiResponse getBuildingTotal();
 }
 
