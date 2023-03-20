@@ -21,6 +21,7 @@ public class AllExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ApiResponse doException(Exception e) {
+        e.printStackTrace();
         return ApiResponse.error(ApiStatueCode.UNKNOWN_ERROR,"未知错误");
     }
 }

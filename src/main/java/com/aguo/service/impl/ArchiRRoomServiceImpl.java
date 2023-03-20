@@ -1,19 +1,29 @@
 package com.aguo.service.impl;
 
-import com.aguo.entity.*;
+import com.aguo.dao.ArchiRRoomDao;
+import com.aguo.entity.ArchiBBuilding;
+import com.aguo.entity.ArchiRRoom;
+import com.aguo.entity.Renting;
+import com.aguo.entity.UUser;
+import com.aguo.entity.vol.RentingVol;
 import com.aguo.entity.vol.RoomItemVol;
+import com.aguo.entity.vol.RoomItemVolV2;
 import com.aguo.service.ArchiBBuildingService;
+import com.aguo.service.ArchiRRoomService;
 import com.aguo.service.RentingService;
 import com.aguo.service.UUserService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.aguo.untils.code.StringUntil;
+import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.PageParam;
+import com.aguo.vo.params.RoomParam;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.aguo.dao.ArchiRRoomDao;
-import com.aguo.service.ArchiRRoomService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,16 +33,20 @@ import java.util.List;
  * @since 2021-11-20 14:52:00
  */
 @Service("archiRRoomService")
-public class ArchiRRoomServiceImpl extends ServiceImpl<ArchiRRoomDao, ArchiRRoom> implements ArchiRRoomService {
+public class ArchiRRoomServiceImpl
+        extends ServiceImpl<ArchiRRoomDao, ArchiRRoom>
+        implements ArchiRRoomService {
     @Autowired
     private ArchiBBuildingService archiBBuildingService;
     @Autowired
     private RentingService rentingService;
     @Autowired
     private UUserService uUserService;
+    @Autowired
+    private ArchiRRoomDao archiRRoomDao;
 
     @Override
-    public List<RoomItemVol> listRoomItemVol(){
+    public List<RoomItemVol> listRoomItemVol() {
         List<RoomItemVol> list = new ArrayList<>();
 //            查询所有楼房信息
         List<ArchiBBuilding> buildings = archiBBuildingService.list();
@@ -62,15 +76,46 @@ public class ArchiRRoomServiceImpl extends ServiceImpl<ArchiRRoomDao, ArchiRRoom
     @Override
     public Boolean addRoom(ArchiRRoom archiRRoom) {
         QueryWrapper<ArchiRRoom> wrapper = new QueryWrapper<>();
-        wrapper.eq("HOUSE_NUMBER",archiRRoom.getHouseNumber())
-                .eq("BUILDING_ID",archiRRoom.getBuildingId());
+        wrapper.eq("HOUSE_NUMBER", archiRRoom.getHouseNumber())
+                .eq("BUILDING_ID", archiRRoom.getBuildingId());
         ArchiRRoom one = getOne(wrapper);
         if (one == null) {
             return save(archiRRoom);
-        }else {
+        } else {
 //            表明房屋门牌号在该楼房已存在
             return false;
         }
+    }
+
+    @Override
+    public ApiResponse listRoom(PageParam pageParam, RoomParam roomParam) {
+        //过滤掉条件
+        List<RoomItemVolV2> list = archiRRoomDao.queryRoomByBuildingNameOrHouseNumber(
+                StringUntil.trimStringOrEmpty(roomParam.getBuildingName()),
+                StringUntil.trimStringOrEmpty(roomParam.getHouseNumber()),
+                (pageParam.getPage() - 1) * pageParam.getPageSize(),
+                pageParam.getPageSize());
+        long count = list.stream().peek(room -> {
+            RentingVol rentingVol = rentingService.roomRentState(room.getRoomId());
+            if (ObjectUtils.isNotEmpty(rentingVol) && rentingVol.getRentState()) {
+                //租房中，查询用户信息
+                UUser uUser = uUserService.queryUserById(rentingVol.getUserId());
+                room.setUserId(uUser.getUserId());
+                room.setName(uUser.getName());
+                room.setUserName(uUser.getUsername());
+                room.setPhoneNumber(uUser.getPhoneNumber());
+
+                room.setRentState(true);
+                room.setCreatedTime(rentingVol.getCreatedTime());
+                room.setStopTime(rentingVol.getStopTime());
+            } else {
+                room.setRentState(false);
+            }
+        }).count();
+        HashMap<String, Object> map = new HashMap<>(100);
+        map.put("list", list);
+        map.put("count", count);
+        return ApiResponse.success(map);
     }
 }
 

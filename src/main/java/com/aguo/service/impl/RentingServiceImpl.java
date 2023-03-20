@@ -1,16 +1,14 @@
 package com.aguo.service.impl;
 
-import com.aguo.entity.UUser;
-import com.aguo.service.UUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.aguo.dao.RentingDao;
 import com.aguo.entity.Renting;
+import com.aguo.entity.vol.RentingVol;
 import com.aguo.service.RentingService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,14 +19,17 @@ import java.util.List;
  */
 @Service("rentingService")
 public class RentingServiceImpl extends ServiceImpl<RentingDao, Renting> implements RentingService {
+    @Autowired
+    private RentingDao rentingDao;
+
     @Override
-    public Renting houseState(int userId, int roomId){
+    public Renting houseState(int userId, int roomId) {
         QueryWrapper<Renting> wrapper = new QueryWrapper<>();
-        if (userId!=-1) {
-            wrapper.eq("USER_ID",userId);
+        if (userId != -1) {
+            wrapper.eq("USER_ID", userId);
         }
-        if(roomId!=-1){
-            wrapper.eq("ROOM_ID",roomId);
+        if (roomId != -1) {
+            wrapper.eq("ROOM_ID", roomId);
         }
         List<Renting> list = list(wrapper);
         if(list.size()==0){
@@ -56,11 +57,17 @@ public class RentingServiceImpl extends ServiceImpl<RentingDao, Renting> impleme
 
     @Override
     public Renting houseOneState(int roomId) {
-        return houseState(-1,roomId);
+        return houseState(-1, roomId);
     }
+
     @Override
-    public Boolean renterRentState(int userId){
+    public Boolean renterRentState(int userId) {
         return houseState(userId, -1).getRentState();
+    }
+
+    @Override
+    public RentingVol roomRentState(Integer roomId) {
+        return rentingDao.queryRentingVol(roomId);
     }
 }
 

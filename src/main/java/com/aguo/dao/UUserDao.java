@@ -1,7 +1,8 @@
 package com.aguo.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.aguo.entity.UUser;
+import com.aguo.entity.vol.UUserVol;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,13 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UUserDao extends BaseMapper<UUser> {
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    UUserVol queryAllRenterOfRenting();
 
 }
 

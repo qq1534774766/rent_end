@@ -3,7 +3,14 @@ package com.aguo.entity.vol;
 import com.aguo.entity.ArchiBBuilding;
 import com.aguo.entity.ArchiRRoom;
 import com.aguo.entity.Renting;
+import lombok.Data;
 
+/**
+ * 房屋查询结果
+ *
+ * @author Administrator
+ */
+@Data
 public class RoomItemVol {
     private ArchiBBuilding archiBBuilding;
     private ArchiRRoom archiRRoom;

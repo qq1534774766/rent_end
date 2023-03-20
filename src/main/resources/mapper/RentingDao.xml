@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aguo.dao.RentingDao">
+
+
+    <select id="queryAllRentingVol" resultType="com.aguo.entity.vol.RentingVol">
+        SELECT
+            R1.USER_ID,
+            R1.ROOM_ID,
+            R1.CREATED_TIME,
+            R1.STOP_TIME,
+            IF(R1.STOP_TIME IS NULL OR R1.STOP_TIME > NOW(), 1, 0) AS RENTSTATE
+        FROM RENTING R1
+        LEFT JOIN RENTING R2
+        ON R1.ROOM_ID = R2.ROOM_ID
+        AND R1.STOP_TIME &lt; R2.STOP_TIME
+        WHERE R2.ROOM_ID IS NULL;
+    </select>
+    <select id="queryRentingVol" resultType="com.aguo.entity.vol.RentingVol">
+        SELECT
+            R1.USER_ID,
+            R1.ROOM_ID,
+            R1.CREATED_TIME,
+            R1.STOP_TIME,
+            IF(R1.STOP_TIME IS NULL OR R1.STOP_TIME > NOW(), 1, 0) AS RENTSTATE
+        FROM RENTING R1
+        LEFT JOIN RENTING R2
+        ON R1.ROOM_ID = R2.ROOM_ID
+        AND R1.STOP_TIME &lt; R2.STOP_TIME
+        WHERE R2.ROOM_ID IS NULL and R1.ROOM_ID=#{roomId};
+    </select>
+</mapper>

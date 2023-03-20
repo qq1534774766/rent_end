@@ -10,6 +10,20 @@ import com.aguo.entity.Renting;
  * @since 2021-11-20 16:27:43
  */
 public interface RentingDao extends BaseMapper<Renting> {
+    /**
+     * 所有的房屋状态
+     *
+     * @return
+     */
+    List<RentingVol> queryAllRentingVol();
+
+    /**
+     * 通过id查房屋状态
+     *
+     * @return
+     */
+    RentingVol queryRentingVol(@Param("roomId") Integer roomId);
+
 
 }
 

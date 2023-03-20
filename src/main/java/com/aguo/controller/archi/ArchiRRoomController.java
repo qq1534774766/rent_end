@@ -4,7 +4,11 @@ package com.aguo.controller.archi;
 import com.aguo.entity.ArchiRRoom;
 import com.aguo.entity.vol.RoomItemVol;
 import com.aguo.service.ArchiRRoomService;
+import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.PageParam;
+import com.aguo.vo.params.RoomParam;
 import com.baomidou.mybatisplus.extension.api.ApiController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,13 +31,25 @@ public class ArchiRRoomController extends ApiController {
     private ArchiRRoomService archiRRoomService;
 
     @RequestMapping("/addRoom")
-    public Boolean addRoom(ArchiRRoom archiRRoom){
+    public Boolean addRoom(ArchiRRoom archiRRoom) {
         return archiRRoomService.addRoom(archiRRoom);
     }
 
     @RequestMapping("/listRoomItemVol")
-    public List<RoomItemVol> listRoomItemVol(){
+    public List<RoomItemVol> listRoomItemVol() {
         return archiRRoomService.listRoomItemVol();
+    }
+
+    /**
+     * 查询房屋，关联查询房屋的租房状态
+     *
+     * @param page
+     * @param roomParam
+     * @return
+     */
+    @GetMapping("/room")
+    public ApiResponse listRoom(PageParam page, RoomParam roomParam) {
+        return archiRRoomService.listRoom(page, roomParam);
     }
 }
 

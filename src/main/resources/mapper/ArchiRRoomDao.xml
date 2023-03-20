@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aguo.dao.ArchiRRoomDao">
+
+    <resultMap id="queryRoomIncludeBuildingResultMap" type="com.aguo.entity.vol.RoomItemVolV2">
+        <result property="buildingId" column="BUILDING_ID"/>
+        <result property="buildingName" column="NAME"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="roomId" column="ROOM_ID"/>
+        <result property="houseNumber" column="HOUSE_NUMBER"/>
+    </resultMap>
+
+    <select id="queryRoomIncludeBuilding" resultMap="queryRoomIncludeBuildingResultMap">
+        select abb.BUILDING_ID,
+           abb.NAME,
+           abb.ADDRESS,
+           arr.ROOM_ID,
+           arr.HOUSE_NUMBER
+        from archi_r_room arr
+        join archi_b_building abb on arr.BUILDING_ID = abb.BUILDING_ID
+    </select>
+    <select id="queryRoomByBuildingNameOrHouseNumber" resultMap="queryRoomIncludeBuildingResultMap">
+        select arr.ROOM_ID,
+        abb.BUILDING_ID,
+        abb.NAME,
+        abb.ADDRESS,
+        arr.HOUSE_NUMBER
+        from archi_r_room arr
+        join archi_b_building abb
+        on arr.BUILDING_ID = abb.BUILDING_ID
+        <if test="buildingName != null and buildingName != ''">
+            and abb.NAME like concat('%',#{buildingName},'%')
+        </if>
+        <if test="houseNumber != null and houseNumber != ''">
+            where HOUSE_NUMBER = #{houseNumber}
+        </if>
+        limit #{page},#{pageSize}
+    </select>
+
+
+</mapper>

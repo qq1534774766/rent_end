@@ -1,7 +1,8 @@
 package com.aguo.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.aguo.entity.Renting;
+import com.aguo.entity.vol.RentingVol;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * 租房关系表(Renting)表服务接口
@@ -11,7 +12,18 @@ import com.aguo.entity.Renting;
  */
 public interface RentingService extends IService<Renting> {
     Renting houseState(int userId, int roomId);
+
     Renting houseOneState(int roomId);
+
     Boolean renterRentState(int userId);
+
+    /**
+     * 根据房屋ID查是否租用中
+     *
+     * @param roomId
+     * @return
+     */
+    RentingVol roomRentState(Integer roomId);
+
 }
 
