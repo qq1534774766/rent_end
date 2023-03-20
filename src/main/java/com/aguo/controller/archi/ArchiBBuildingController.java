@@ -41,4 +41,20 @@ public class ArchiBBuildingController {
     public ApiResponse addBuilding(@RequestBody ArchiBBuilding archibBuilding) {
         return archiBBuildingService.addBuilding(archibBuilding);
     }
+
+    /**
+     * 删除楼盘
+     *
+     * @param archibBuildingd
+     * @return
+     */
+    @DeleteMapping("/building")
+    public ApiResponse deleteBuilding(@RequestBody ArchiBBuilding archibBuilding) {
+        return archiBBuildingService.deleteBuilding(archibBuilding);
+    }
+
+    @PutMapping("/building")
+    public ApiResponse updateBuilding(@RequestBody ArchiBBuilding archibBuilding) {
+        return archiBBuildingService.updateBuilding(archibBuilding);
+    }
 }

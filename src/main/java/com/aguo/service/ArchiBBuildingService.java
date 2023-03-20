@@ -39,5 +39,21 @@ public interface ArchiBBuildingService extends IService<ArchiBBuilding> {
      */
     @Deprecated
     ApiResponse getBuildingTotal();
+
+    /**
+     * 删除楼盘
+     *
+     * @param archibBuildingd
+     * @return
+     */
+    ApiResponse deleteBuilding(ArchiBBuilding archibBuilding);
+
+    /**
+     * 更新楼盘
+     *
+     * @param archibBuilding
+     * @return
+     */
+    ApiResponse updateBuilding(ArchiBBuilding archibBuilding);
 }
 

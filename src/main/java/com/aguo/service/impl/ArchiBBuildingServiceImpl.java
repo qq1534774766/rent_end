@@ -60,5 +60,18 @@ public class ArchiBBuildingServiceImpl extends ServiceImpl<ArchiBBuildingDao, Ar
         Integer count = archiBBuildingDao.selectCount(null);
         return ApiResponse.success(count);
     }
+
+    @Override
+    public ApiResponse deleteBuilding(ArchiBBuilding archibBuilding) {
+        int i = archiBBuildingDao.deleteById(archibBuilding.getBuildingId());
+        return ApiResponse.booleanResponse(i > 0, "删除失败");
+    }
+
+    @Override
+    public ApiResponse updateBuilding(ArchiBBuilding archibBuilding) {
+        int i = archiBBuildingDao.updateById(archibBuilding);
+        return ApiResponse.booleanResponse(i > 0, "更新失败");
+
+    }
 }
 
