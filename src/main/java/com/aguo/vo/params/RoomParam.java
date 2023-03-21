@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class RoomParam {
+    private String buildingId;
     private String buildingName;
     private String houseNumber;
     private Boolean rentState;

@@ -39,5 +39,13 @@ public interface ArchiRRoomService extends IService<ArchiRRoom> {
      * @return
      */
     ApiResponse listRoomV2(PageParam page, RoomParam roomParam);
+
+    /**
+     * 创建房屋
+     *
+     * @param roomParam
+     * @return
+     */
+    ApiResponse addRoom(RoomParam roomParam);
 }
 

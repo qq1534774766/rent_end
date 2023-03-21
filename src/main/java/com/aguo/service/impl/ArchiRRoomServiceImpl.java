@@ -88,6 +88,22 @@ public class ArchiRRoomServiceImpl
     }
 
     @Override
+    public ApiResponse addRoom(RoomParam roomParam) {
+        ArchiRRoom archiRRoom = new ArchiRRoom();
+        archiRRoom.setBuildingId(Integer.valueOf(roomParam.getBuildingId()));
+        archiRRoom.setHouseNumber(roomParam.getHouseNumber());
+        int insert = 0;
+        try {
+            insert = archiRRoomDao.insert(archiRRoom);
+        } catch (Exception e) {
+            //重复添加房屋
+        }
+
+        String errorMsg = String.format("房间号【%s】已存在于该楼盘", roomParam.getHouseNumber());
+        return ApiResponse.booleanResponse(insert > 0, errorMsg);
+    }
+
+    @Override
     public ApiResponse listRoom(PageParam pageParam, RoomParam roomParam) {
         //过滤掉条件
         List<RoomItemVolV2> list = archiRRoomDao.queryRoomByBuildingNameOrHouseNumber(

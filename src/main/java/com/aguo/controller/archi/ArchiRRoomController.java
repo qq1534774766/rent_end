@@ -1,16 +1,13 @@
 package com.aguo.controller.archi;
 
 
-import com.aguo.entity.ArchiRRoom;
 import com.aguo.entity.vol.RoomItemVol;
 import com.aguo.service.ArchiRRoomService;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RoomParam;
 import com.baomidou.mybatisplus.extension.api.ApiController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,9 +27,9 @@ public class ArchiRRoomController extends ApiController {
     @Resource
     private ArchiRRoomService archiRRoomService;
 
-    @RequestMapping("/addRoom")
-    public Boolean addRoom(ArchiRRoom archiRRoom) {
-        return archiRRoomService.addRoom(archiRRoom);
+    @PostMapping("/room")
+    public ApiResponse addRoom(@RequestBody RoomParam roomParam) {
+        return archiRRoomService.addRoom(roomParam);
     }
 
     @RequestMapping("/listRoomItemVol")
