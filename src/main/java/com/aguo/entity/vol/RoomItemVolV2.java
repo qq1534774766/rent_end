@@ -15,7 +15,7 @@ public class RoomItemVolV2 {
 
     private Integer userId;
     private String name;
-    private String userName;
+    private String username;
     private String phoneNumber;
 
     //房屋信息

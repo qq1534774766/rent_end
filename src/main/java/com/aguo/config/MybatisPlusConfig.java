@@ -13,13 +13,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisPlusConfig {
     /**
-     *  分页功能
+     * 分页功能
+     *
      * @return
      */
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor(){
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return mybatisPlusInterceptor;
     }
+//    @Bean
+//    public ConfigurationCustomizer configurationCustomizer() {
+//        return configuration -> {
+//            // 注册类型处理器
+//            configuration.getTypeHandlerRegistry().register(Boolean.class, new BooleanTypeHandler());
+//        };
+//    }
 }

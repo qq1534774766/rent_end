@@ -55,5 +55,12 @@ public interface ArchiBBuildingService extends IService<ArchiBBuilding> {
      * @return
      */
     ApiResponse updateBuilding(ArchiBBuilding archibBuilding);
+
+    /**
+     * 获取楼盘信息用于提示
+     *
+     * @return
+     */
+    ApiResponse getBuildingTip();
 }
 

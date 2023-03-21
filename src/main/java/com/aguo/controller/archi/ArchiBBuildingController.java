@@ -53,8 +53,25 @@ public class ArchiBBuildingController {
         return archiBBuildingService.deleteBuilding(archibBuilding);
     }
 
+    /**
+     * 更新楼盘
+     *
+     * @param archibBuilding
+     * @return
+     */
     @PutMapping("/building")
     public ApiResponse updateBuilding(@RequestBody ArchiBBuilding archibBuilding) {
         return archiBBuildingService.updateBuilding(archibBuilding);
+    }
+
+    /**
+     * 获取楼盘信息，用于筛选时的提示
+     *
+     * @return
+     */
+    @GetMapping("/buildingTip")
+    public ApiResponse getBuildingTip() {
+        return archiBBuildingService.getBuildingTip();
+
     }
 }

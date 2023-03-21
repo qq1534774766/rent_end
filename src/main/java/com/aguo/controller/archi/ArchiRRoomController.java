@@ -47,9 +47,24 @@ public class ArchiRRoomController extends ApiController {
      * @param roomParam
      * @return
      */
-    @GetMapping("/room")
+    @GetMapping("/roomv1")
+    @Deprecated
     public ApiResponse listRoom(PageParam page, RoomParam roomParam) {
         return archiRRoomService.listRoom(page, roomParam);
     }
+
+    /**
+     * 查询房屋，关联查询房屋的租房状态
+     *
+     * @param page
+     * @param roomParam
+     * @return
+     */
+    @GetMapping("/room")
+    public ApiResponse listRoomV2(PageParam page, RoomParam roomParam) {
+        return archiRRoomService.listRoomV2(page, roomParam);
+    }
+
+
 }
 

@@ -39,5 +39,31 @@ public interface ArchiRRoomDao extends BaseMapper<ArchiRRoom> {
                                                              @Param("page") Integer page,
                                                              @Param("pageSize") Integer pageSize);
 
+    /**
+     * 查询所有房屋信息包括楼盘、用户以及租用情况。一句sql搞定
+     *
+     * @param page
+     * @param pageSize
+     * @param buildingName
+     * @param houseNumber
+     * @param rentState
+     * @return
+     */
+    List<RoomItemVolV2> queryAllRoomInfo(@Param("page") Integer page,
+                                         @Param("pageSize") Integer pageSize,
+                                         @Param("buildingName") String buildingName,
+                                         @Param("houseNumber") String houseNumber,
+                                         @Param("rentState") String rentState);
+
+    /**
+     * 查询条数
+     *
+     * @param buildingName
+     * @param houseNumber
+     * @return
+     */
+    Integer queryAllRoomInfoCount(@Param("buildingName") String buildingName,
+                                  @Param("houseNumber") String houseNumber,
+                                  @Param("rentState") String rentState);
 }
 

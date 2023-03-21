@@ -73,5 +73,13 @@ public class ArchiBBuildingServiceImpl extends ServiceImpl<ArchiBBuildingDao, Ar
         return ApiResponse.booleanResponse(i > 0, "更新失败");
 
     }
+
+    @Override
+    public ApiResponse getBuildingTip() {
+        LambdaQueryWrapper<ArchiBBuilding> lqw = new LambdaQueryWrapper<>();
+        lqw.select(ArchiBBuilding::getBuildingId, ArchiBBuilding::getName);
+        List<ArchiBBuilding> list = archiBBuildingDao.selectList(lqw);
+        return ApiResponse.success(list);
+    }
 }
 

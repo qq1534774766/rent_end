@@ -12,7 +12,7 @@ import com.aguo.service.ArchiBBuildingService;
 import com.aguo.service.ArchiRRoomService;
 import com.aguo.service.RentingService;
 import com.aguo.service.UUserService;
-import com.aguo.untils.code.StringUntil;
+import com.aguo.untils.code.ParamUntil;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RoomParam;
@@ -91,8 +91,8 @@ public class ArchiRRoomServiceImpl
     public ApiResponse listRoom(PageParam pageParam, RoomParam roomParam) {
         //过滤掉条件
         List<RoomItemVolV2> list = archiRRoomDao.queryRoomByBuildingNameOrHouseNumber(
-                StringUntil.trimStringOrEmpty(roomParam.getBuildingName()),
-                StringUntil.trimStringOrEmpty(roomParam.getHouseNumber()),
+                ParamUntil.trimStringOrEmpty(roomParam.getBuildingName()),
+                ParamUntil.trimStringOrEmpty(roomParam.getHouseNumber()),
                 (pageParam.getPage() - 1) * pageParam.getPageSize(),
                 pageParam.getPageSize());
         long count = list.stream().peek(room -> {
@@ -102,7 +102,7 @@ public class ArchiRRoomServiceImpl
                 UUser uUser = uUserService.queryUserById(rentingVol.getUserId());
                 room.setUserId(uUser.getUserId());
                 room.setName(uUser.getName());
-                room.setUserName(uUser.getUsername());
+                room.setUsername(uUser.getUsername());
                 room.setPhoneNumber(uUser.getPhoneNumber());
 
                 room.setRentState(true);
@@ -112,6 +112,26 @@ public class ArchiRRoomServiceImpl
                 room.setRentState(false);
             }
         }).count();
+        HashMap<String, Object> map = new HashMap<>(100);
+        map.put("list", list);
+        map.put("count", count);
+        return ApiResponse.success(map);
+    }
+
+
+    @Override
+    public ApiResponse listRoomV2(PageParam pageParam, RoomParam roomParam) {
+
+        List<RoomItemVolV2> list = archiRRoomDao.queryAllRoomInfo(
+                (pageParam.getPage() - 1) * pageParam.getPageSize(),
+                pageParam.getPageSize(),
+                ParamUntil.trimStringOrEmpty(roomParam.getBuildingName()),
+                ParamUntil.trimStringOrEmpty(roomParam.getHouseNumber()),
+                ParamUntil.handleBooleanOrEmpty(roomParam.getRentState()));
+        Integer count = archiRRoomDao.queryAllRoomInfoCount(
+                ParamUntil.trimStringOrEmpty(roomParam.getBuildingName()),
+                ParamUntil.trimStringOrEmpty(roomParam.getHouseNumber()),
+                ParamUntil.handleBooleanOrEmpty(roomParam.getRentState()));
         HashMap<String, Object> map = new HashMap<>(100);
         map.put("list", list);
         map.put("count", count);

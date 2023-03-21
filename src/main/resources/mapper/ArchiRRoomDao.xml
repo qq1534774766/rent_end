@@ -37,5 +37,65 @@
         limit #{page},#{pageSize}
     </select>
 
+    <select id="queryAllRoomInfo" resultType="com.aguo.entity.vol.RoomItemVolV2">
+        <include refid="queryAllRoom"/>
+        LIMIT #{page},#{pageSize}
+    </select>
+    <select id="queryAllRoomInfoCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (
+        <include refid="queryAllRoom"/>) AS T
+    </select>
+
+    <sql id="queryAllRoom">
+        SELECT ARR.ROOM_ID,
+        ABB.BUILDING_ID,
+        ABB.NAME AS BUILDING_NAME,
+        ABB.ADDRESS,
+        ARR.HOUSE_NUMBER,
+        R3.USER_ID,
+        R3.CREATED_TIME,
+        R3.STOP_TIME,
+        CASE
+        WHEN (R3.CREATED_TIME IS NOT NULL AND R3.STOP_TIME IS NULL) THEN 1
+        WHEN R3.STOP_TIME > NOW() THEN 1
+        ELSE 0
+        END AS RENTSTATE,
+        UU.NAME,
+        UU.ROLE_ID,
+        UU.USERNAME,
+        UU.SEX,
+        UU.PHONE_NUMBER,
+        UU.IDENTITY,
+        UU.LOCKED,
+        UU.ENABLE
+        FROM ARCHI_R_ROOM ARR
+        JOIN ARCHI_B_BUILDING ABB
+        ON ARR.BUILDING_ID = ABB.BUILDING_ID
+        <if test="buildingName != null and buildingName != ''">
+            AND ABB.NAME LIKE concat('%',#{buildingName},'%')
+        </if>
+        LEFT JOIN
+        (SELECT
+        R1.USER_ID,
+        R1.ROOM_ID AS ROOM_ID,
+        R1.CREATED_TIME,
+        R1.STOP_TIME
+        FROM RENTING R1
+        LEFT JOIN RENTING R2
+        ON R1.ROOM_ID = R2.ROOM_ID AND R1.STOP_TIME &lt; R2.STOP_TIME
+        WHERE R2.ROOM_ID IS NULL) AS R3
+        ON ARR.ROOM_ID=R3.ROOM_ID
+        LEFT JOIN U_USER UU
+        ON UU.USER_ID = R3.USER_ID
+
+        where 1=1
+        <if test="houseNumber != null and houseNumber != ''">
+            and HOUSE_NUMBER = #{houseNumber}
+        </if>
+        <if test="rentState != null and rentState != ''">
+            HAVING RENTSTATE = #{rentState}
+        </if>
+    </sql>
+
 
 </mapper>

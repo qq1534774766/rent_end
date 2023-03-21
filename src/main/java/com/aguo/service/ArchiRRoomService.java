@@ -27,6 +27,17 @@ public interface ArchiRRoomService extends IService<ArchiRRoom> {
      * @param roomParam 查询房屋的条件
      * @return
      */
+    @Deprecated
     ApiResponse listRoom(PageParam pageParam, RoomParam roomParam);
+
+    /**
+     * V2,一句sql搞定。
+     * 分页查询，顺便关联查询租房状态
+     *
+     * @param page      页面参数
+     * @param roomParam 查询房屋的条件
+     * @return
+     */
+    ApiResponse listRoomV2(PageParam page, RoomParam roomParam);
 }
 
