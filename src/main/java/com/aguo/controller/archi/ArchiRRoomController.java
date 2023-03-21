@@ -62,6 +62,17 @@ public class ArchiRRoomController extends ApiController {
         return archiRRoomService.listRoomV2(page, roomParam);
     }
 
+    /**
+     * 删除房屋 包含所有租用关系
+     *
+     * @param roomId
+     * @return
+     */
+    @DeleteMapping("/room")
+    public ApiResponse deleteRoom(Integer roomId) {
+        return archiRRoomService.deleteRoom(roomId);
+    }
+
 
 }
 

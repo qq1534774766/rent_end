@@ -153,5 +153,14 @@ public class ArchiRRoomServiceImpl
         map.put("count", count);
         return ApiResponse.success(map);
     }
+
+    @Override
+    public ApiResponse deleteRoom(Integer roomId) {
+        //删除记录表相关记录
+        rentingService.deleteRentingByRoomId(roomId);
+        //删除房屋自身记录
+        removeById(roomId);
+        return ApiResponse.success();
+    }
 }
 

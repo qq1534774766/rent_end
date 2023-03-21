@@ -4,6 +4,7 @@ import com.aguo.dao.RentingDao;
 import com.aguo.entity.Renting;
 import com.aguo.entity.vol.RentingVol;
 import com.aguo.service.RentingService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,14 @@ public class RentingServiceImpl extends ServiceImpl<RentingDao, Renting> impleme
     @Override
     public RentingVol roomRentState(Integer roomId) {
         return rentingDao.queryRentingVol(roomId);
+    }
+
+    @Override
+    public Boolean deleteRentingByRoomId(Integer roomId) {
+        LambdaQueryWrapper<Renting> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Renting::getRoomId, roomId);
+        int delete = rentingDao.delete(queryWrapper);
+        return delete > 0;
     }
 }
 

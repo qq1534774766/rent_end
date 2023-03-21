@@ -25,5 +25,13 @@ public interface RentingService extends IService<Renting> {
      */
     RentingVol roomRentState(Integer roomId);
 
+    /**
+     * 通过房屋名删除所有记录
+     *
+     * @param roomId
+     * @return
+     */
+    Boolean deleteRentingByRoomId(Integer roomId);
+
 }
 
