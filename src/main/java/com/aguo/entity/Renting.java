@@ -1,7 +1,5 @@
 package com.aguo.entity;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,6 +7,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -22,7 +21,7 @@ import java.util.Objects;
 public class Renting extends Model<Renting> {
     //租用ID
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Integer rentingId;
     //用户ID
     private Integer userId;
     //房屋ID
@@ -60,11 +59,11 @@ public class Renting extends Model<Renting> {
     }
 
     public Integer getId() {
-        return id;
+        return rentingId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer rentingId) {
+        this.rentingId = rentingId;
     }
 
     public Integer getUserId() {
@@ -134,7 +133,7 @@ public class Renting extends Model<Renting> {
     @Override
     public String toString() {
         return "Renting{" +
-                "id=" + id +
+                "id=" + rentingId +
                 ", userId=" + userId +
                 ", roomId=" + roomId +
                 ", createdTime=" + createdTime +
@@ -154,7 +153,7 @@ public class Renting extends Model<Renting> {
      */
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.rentingId;
     }
 
     @Override
@@ -162,7 +161,7 @@ public class Renting extends Model<Renting> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Renting renting = (Renting) o;
-        return Objects.equals(id, renting.id) &&
+        return Objects.equals(rentingId, renting.rentingId) &&
                 Objects.equals(userId, renting.userId) &&
                 Objects.equals(roomId, renting.roomId) &&
                 Objects.equals(createdTime, renting.createdTime) &&
@@ -174,7 +173,7 @@ public class Renting extends Model<Renting> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, roomId, createdTime, stopTime, updateTime, uUser, archiRRoom);
+        return Objects.hash(rentingId, userId, roomId, createdTime, stopTime, updateTime, uUser, archiRRoom);
     }
 
 }

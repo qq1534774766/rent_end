@@ -27,7 +27,10 @@ public class RoomItemVolV2 {
     private String houseNumber;
 
     //租用信息
-
+    /**
+     * 最新租用记录的id
+     */
+    private Integer rentingId;
     private Boolean rentState;
     private Date createdTime;
     private Date stopTime;

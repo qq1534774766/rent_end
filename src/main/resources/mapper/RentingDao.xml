@@ -29,4 +29,90 @@
         AND R1.STOP_TIME &lt; R2.STOP_TIME
         WHERE R2.ROOM_ID IS NULL and R1.ROOM_ID=#{roomId};
     </select>
+    <resultMap id="BaseResultMap" type="com.aguo.entity.Renting">
+        <id property="rentingId" column="RENTING_ID" jdbcType="INTEGER"/>
+        <result property="userId" column="USER_ID" jdbcType="INTEGER"/>
+        <result property="roomId" column="ROOM_ID" jdbcType="INTEGER"/>
+        <result property="stopTime" column="STOP_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        RENTING_ID,USER_ID,ROOM_ID,
+        STOP_TIME,CREATED_TIME,UPDATE_TIME
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from renting
+        where RENTING_ID = #{rentingId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from renting
+        where  RENTING_ID = #{rentingId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="RENTING_ID" keyProperty="rentingId" parameterType="com.aguo.entity.Renting"
+            useGeneratedKeys="true">
+        insert into renting
+        ( RENTING_ID,USER_ID,ROOM_ID
+        ,STOP_TIME,CREATED_TIME,UPDATE_TIME
+        )
+        values (#{rentingId,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{roomId,jdbcType=INTEGER}
+        ,#{stopTime,jdbcType=TIMESTAMP},#{createdTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="RENTING_ID" keyProperty="rentingId" parameterType="com.aguo.entity.Renting"
+            useGeneratedKeys="true">
+        insert into renting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rentingId != null">RENTING_ID,</if>
+            <if test="userId != null">USER_ID,</if>
+            <if test="roomId != null">ROOM_ID,</if>
+            <if test="stopTime != null">STOP_TIME,</if>
+            <if test="createdTime != null">CREATED_TIME,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rentingId != null">#{rentingId,jdbcType=INTEGER},</if>
+            <if test="userId != null">#{userId,jdbcType=INTEGER},</if>
+            <if test="roomId != null">#{roomId,jdbcType=INTEGER},</if>
+            <if test="stopTime != null">#{stopTime,jdbcType=TIMESTAMP},</if>
+            <if test="createdTime != null">#{createdTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.aguo.entity.Renting">
+        update renting
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="roomId != null">
+                ROOM_ID = #{roomId,jdbcType=INTEGER},
+            </if>
+            <if test="stopTime != null">
+                STOP_TIME = #{stopTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where RENTING_ID = #{rentingId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.aguo.entity.Renting">
+        update renting
+        set 
+            USER_ID =  #{userId,jdbcType=INTEGER},
+            ROOM_ID =  #{roomId,jdbcType=INTEGER},
+            STOP_TIME =  #{stopTime,jdbcType=TIMESTAMP},
+            CREATED_TIME =  #{createdTime,jdbcType=TIMESTAMP},
+            UPDATE_TIME =  #{updateTime,jdbcType=TIMESTAMP}
+        where   RENTING_ID = #{rentingId,jdbcType=INTEGER}
+    </update>
 </mapper>

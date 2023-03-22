@@ -24,6 +24,16 @@ public interface RentingDao extends BaseMapper<Renting> {
      */
     RentingVol queryRentingVol(@Param("roomId") Integer roomId);
 
+    int deleteByPrimaryKey(Long id);
+
+    int insertSelective(Renting record);
+
+    Renting selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Renting record);
+
+    int updateByPrimaryKey(Renting record);
+
 
 }
 

@@ -36,6 +36,11 @@ public class ApiResponse {
         return new ApiResponse(code.getCode(), message, null, false);
     }
 
+    public static ApiResponse error(ApiStatueCode code) {
+        return new ApiResponse(code.getCode(), code.getMsg(), null, false);
+    }
+
+
     public static ApiResponse error(String message) {
         return new ApiResponse(ApiStatueCode.OTHER_ERROR.getCode(), message, null, false);
     }
@@ -56,7 +61,12 @@ public class ApiResponse {
     public static ApiResponse booleanResponse(boolean isSuccess) {
         return isSuccess ? ApiResponse.success() : ApiResponse.error();
     }
-    public static ApiResponse booleanResponse(boolean isSuccess,String errorMsg) {
+
+    public static ApiResponse booleanResponse(boolean isSuccess, String errorMsg) {
         return isSuccess ? ApiResponse.success() : ApiResponse.error(errorMsg);
+    }
+
+    public static ApiResponse booleanResponse(boolean isSuccess, ApiStatueCode code) {
+        return booleanResponse(isSuccess, code.getMsg());
     }
 }

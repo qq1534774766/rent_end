@@ -55,6 +55,7 @@
         R3.USER_ID,
         R3.CREATED_TIME,
         R3.STOP_TIME,
+        R3.RENTING_ID,
         CASE
         WHEN (R3.CREATED_TIME IS NOT NULL AND R3.STOP_TIME IS NULL) THEN 1
         WHEN R3.STOP_TIME > NOW() THEN 1
@@ -79,15 +80,15 @@
         R1.USER_ID,
         R1.ROOM_ID AS ROOM_ID,
         R1.CREATED_TIME,
-        R1.STOP_TIME
+        R1.STOP_TIME,
+        R1.RENTING_ID
         FROM RENTING R1
         LEFT JOIN RENTING R2
-        ON R1.ROOM_ID = R2.ROOM_ID AND R1.STOP_TIME &lt; R2.STOP_TIME
+        ON R1.ROOM_ID = R2.ROOM_ID AND R1.STOP_TIME &lt; IF((R2.STOP_TIME IS NULL), now(),R2.STOP_TIME)
         WHERE R2.ROOM_ID IS NULL) AS R3
         ON ARR.ROOM_ID=R3.ROOM_ID
         LEFT JOIN U_USER UU
         ON UU.USER_ID = R3.USER_ID
-
         where 1=1
         <if test="houseNumber != null and houseNumber != ''">
             and HOUSE_NUMBER = #{houseNumber}

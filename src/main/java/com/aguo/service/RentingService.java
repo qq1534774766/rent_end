@@ -2,6 +2,7 @@ package com.aguo.service;
 
 import com.aguo.entity.Renting;
 import com.aguo.entity.vol.RentingVol;
+import com.aguo.vo.ApiResponse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -33,5 +34,12 @@ public interface RentingService extends IService<Renting> {
      */
     Boolean deleteRentingByRoomId(Integer roomId);
 
+    /**
+     * 更新房屋信息时，处理房屋
+     *
+     * @param rentingVol
+     * @return
+     */
+    ApiResponse handleRenting(RentingVol rentingVol);
 }
 
