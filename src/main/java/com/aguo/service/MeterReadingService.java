@@ -21,4 +21,28 @@ public interface MeterReadingService extends IService<MeterReading> {
      * @return
      */
     ApiResponse queryMeterReading(PageParam page, MeterReadingParam meterReadingParam);
+
+    /**
+     * 新增
+     *
+     * @param meterReading
+     * @return
+     */
+    ApiResponse addMeterReading(MeterReading meterReading);
+
+    /**
+     * 通过id更新记录
+     *
+     * @param meterReading
+     * @return
+     */
+    ApiResponse updateMeterReading(MeterReading meterReading);
+
+    /**
+     * 通过id删除记录
+     *
+     * @param meterReadingId
+     * @return
+     */
+    ApiResponse deleteMeterReading(Integer meterReadingId);
 }

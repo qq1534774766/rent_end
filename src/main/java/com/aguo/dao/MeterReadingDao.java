@@ -1,11 +1,11 @@
 package com.aguo.dao;
 
 import com.aguo.entity.MeterReading;
+import com.aguo.vo.MeterReadingVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,5 +19,29 @@ import java.util.List;
 public interface MeterReadingDao extends BaseMapper<MeterReading> {
 
 
-    List<MeterReading> queryMeterReading(Integer page, Integer pageSize, String buildingName, String houseNumber, Date readingDate);
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param pageSize
+     * @param buildingName
+     * @param houseNumber
+     * @param year
+     * @param month
+     * @return
+     */
+    List<MeterReadingVo> queryMeterReading(Integer page, Integer pageSize,
+                                           String buildingName, String houseNumber,
+                                           Integer year, Integer month);
+
+    /**
+     * 计数功能
+     *
+     * @param buildingName
+     * @param houseNumber
+     * @param year
+     * @param month
+     * @return
+     */
+    Long countQueryMeterReading(String buildingName, String houseNumber, Integer year, Integer month);
 }

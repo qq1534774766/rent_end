@@ -1,5 +1,6 @@
 package com.aguo.untils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 
 import java.text.ParseException;
@@ -10,6 +11,7 @@ public class StringToDateUntil implements Converter<String, Date> {
 
     @Override
     public Date convert(String birth) {
+        if (StringUtils.isBlank(birth)) return null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date parse = null;
         try {

@@ -16,6 +16,7 @@ import com.aguo.untils.code.ParamUntil;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RoomParam;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
@@ -161,6 +162,14 @@ public class ArchiRRoomServiceImpl
         //删除房屋自身记录
         removeById(roomId);
         return ApiResponse.success();
+    }
+
+    @Override
+    public ApiResponse listRoomByBuildingId(Integer buildingId) {
+        LambdaQueryWrapper<ArchiRRoom> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(ArchiRRoom::getBuildingId, buildingId);
+        List<ArchiRRoom> list = archiRRoomDao.selectList(lqw);
+        return ApiResponse.success(list);
     }
 }
 

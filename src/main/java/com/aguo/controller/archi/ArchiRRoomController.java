@@ -73,6 +73,11 @@ public class ArchiRRoomController extends ApiController {
         return archiRRoomService.deleteRoom(roomId);
     }
 
+    @GetMapping("/listRoomByBuildingId")
+    public ApiResponse listRoomByBuildingId(Integer buildingId) {
+        return archiRRoomService.listRoomByBuildingId(buildingId);
+    }
+
 
 }
 

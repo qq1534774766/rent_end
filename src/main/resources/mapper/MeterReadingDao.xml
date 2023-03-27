@@ -16,7 +16,33 @@
         ID,ROOM_ID,READING_DATE,
         WATER_READING,ELECTRICITY_READING
     </sql>
-    <select id="queryMeterReading" resultType="com.aguo.entity.MeterReading">
-
+    <select id="queryMeterReading" resultType="com.aguo.vo.MeterReadingVo">
+        <include refid="QueryMeterReadingSql"/>
+        limit #{page},#{pageSize}
     </select>
+    <select id="countQueryMeterReading" resultType="java.lang.Long">
+        select count(*) from
+        (<include refid="QueryMeterReadingSql"/>) r1
+    </select>
+    <sql id="QueryMeterReadingSql">
+        select
+        r1.ID,r1.ROOM_ID,r1.WATER_READING,r1.ELECTRICITY_READING,r1.READING_DATE,
+        r2.HOUSE_NUMBER,
+        r3.BUILDING_ID,r3.NAME BUILDING_NAME
+        from meter_reading r1
+        JOIN archi_r_room r2
+        on r1.ROOM_ID = r2.ROOM_ID
+        <if test="houseNumber != null and houseNumber != ''">
+            and r2.HOUSE_NUMBER = #{houseNumber}
+        </if>
+        JOIN archi_b_building r3
+        on r2.BUILDING_ID = r3.BUILDING_ID
+        <if test="buildingName != null and buildingName != ''">
+            and r3.NAME = #{buildingName}
+        </if>
+        WHERE 1=1
+        <if test="year != null and year != '' and month != null and month != '' ">
+            and YEAR(READING_DATE) = #{year} and MONTH(READING_DATE) = #{month}
+        </if>
+    </sql>
 </mapper>
