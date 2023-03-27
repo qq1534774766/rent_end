@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aguo.dao.MeterReadingDao">
+
+    <resultMap id="BaseResultMap" type="com.aguo.entity.MeterReading">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="roomId" column="ROOM_ID" jdbcType="INTEGER"/>
+        <result property="readingDate" column="READING_DATE" jdbcType="TIMESTAMP"/>
+        <result property="waterReading" column="WATER_READING" jdbcType="DOUBLE"/>
+        <result property="electricityReading" column="ELECTRICITY_READING" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,ROOM_ID,READING_DATE,
+        WATER_READING,ELECTRICITY_READING
+    </sql>
+</mapper>
