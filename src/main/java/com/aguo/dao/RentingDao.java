@@ -22,6 +22,7 @@ public interface RentingDao extends BaseMapper<Renting> {
      *
      * @return
      */
+    @Deprecated
     RentingVol queryRentingVol(@Param("roomId") Integer roomId);
 
     int deleteByPrimaryKey(Long id);

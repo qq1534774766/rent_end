@@ -16,4 +16,7 @@
         ID,ROOM_ID,READING_DATE,
         WATER_READING,ELECTRICITY_READING
     </sql>
+    <select id="queryMeterReading" resultType="com.aguo.entity.MeterReading">
+
+    </select>
 </mapper>

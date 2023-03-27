@@ -1,6 +1,9 @@
 package com.aguo.service;
 
 import com.aguo.entity.MeterReading;
+import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.MeterReadingParam;
+import com.aguo.vo.params.PageParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -10,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MeterReadingService extends IService<MeterReading> {
 
+    /**
+     * 分页查询房屋及其水电的记录数
+     *
+     * @param page
+     * @param meterReadingParam
+     * @return
+     */
+    ApiResponse queryMeterReading(PageParam page, MeterReadingParam meterReadingParam);
 }
