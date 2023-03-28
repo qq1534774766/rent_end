@@ -3,6 +3,7 @@ package com.aguo.controller.archi;
 import com.aguo.entity.MeterReading;
 import com.aguo.service.MeterReadingService;
 import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.MeterReadingExcelParam;
 import com.aguo.vo.params.MeterReadingParam;
 import com.aguo.vo.params.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,11 @@ public class MeterReadingController {
     @GetMapping("/downloadExcel")
     public void downloadExcelTemplate(Integer buildingId, Date readingDate, HttpServletResponse response) throws IOException {
         meterReadingService.downloadExcelTemplate(buildingId, readingDate, response);
+    }
 
+    @PostMapping("/handleList")
+    public ApiResponse handleList(@RequestBody MeterReadingExcelParam meterReadingExcelParam) {
+        System.out.println(meterReadingExcelParam);
+        return meterReadingService.handleList(meterReadingExcelParam.getMeterReadingExcelParam());
     }
 }

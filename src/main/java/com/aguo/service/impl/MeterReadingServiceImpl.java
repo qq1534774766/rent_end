@@ -9,6 +9,7 @@ import com.aguo.service.MeterReadingService;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
+import com.aguo.vo.params.MeterReadingItem;
 import com.aguo.vo.params.MeterReadingParam;
 import com.aguo.vo.params.PageParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -179,4 +180,9 @@ public class MeterReadingServiceImpl extends ServiceImpl<MeterReadingDao, MeterR
 
     }
 
+
+    @Override
+    public ApiResponse handleList(List<MeterReadingItem> meterReadingItems) {
+        return ApiResponse.success();
+    }
 }

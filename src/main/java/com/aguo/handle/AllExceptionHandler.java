@@ -2,7 +2,6 @@ package com.aguo.handle;
 
 import com.aguo.enums.ApiStatueCode;
 import com.aguo.vo.ApiResponse;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,10 +22,10 @@ public class AllExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ApiResponse doException(Exception e) {
         e.printStackTrace();
-        String message = e.getMessage();
-        if (ObjectUtils.isNotEmpty(message)) {
-            return ApiResponse.error(ApiStatueCode.UNKNOWN_ERROR, message);
-        }
+//        String message = e.getMessage();
+//        if (ObjectUtils.isNotEmpty(message)) {
+//            return ApiResponse.error(ApiStatueCode.UNKNOWN_ERROR, message);
+//        }
         return ApiResponse.error(ApiStatueCode.UNKNOWN_ERROR, "未知错误");
     }
 }

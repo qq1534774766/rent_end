@@ -2,6 +2,7 @@ package com.aguo.service;
 
 import com.aguo.entity.MeterReading;
 import com.aguo.vo.ApiResponse;
+import com.aguo.vo.params.MeterReadingItem;
 import com.aguo.vo.params.MeterReadingParam;
 import com.aguo.vo.params.PageParam;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -58,4 +60,14 @@ public interface MeterReadingService extends IService<MeterReading> {
      * @param response
      */
     void downloadExcelTemplate(Integer buildingId, Date readingDate, HttpServletResponse response) throws IOException;
+
+    /**
+     * 处理水电数据
+     *
+     * @param meterReadingItems
+     * @return
+     */
+    ApiResponse handleList(List<MeterReadingItem> meterReadingItems);
+
+
 }
