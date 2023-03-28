@@ -3,10 +3,13 @@ package com.aguo.dao;
 import com.aguo.entity.MeterReading;
 import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
+import com.aguo.vo.params.MeterReadingItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,4 +56,13 @@ public interface MeterReadingDao extends BaseMapper<MeterReading> {
      * @return
      */
     List<MeterReadingExcelVo> fetchMeterReadingExcelVo(Integer buildingId, Integer year, Integer month, Integer day);
+
+    /**
+     * 根据roomID和时间来确定有没重复记录
+     *
+     * @param list
+     * @param readingDate
+     * @return
+     */
+    Integer insertOrUpdateMeterReading(@Param("list") List<MeterReadingItem> list, @Param("readingDate") Date readingDate);
 }

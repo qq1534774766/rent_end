@@ -9,6 +9,7 @@ import com.aguo.service.MeterReadingService;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
+import com.aguo.vo.params.MeterReadingExcelParam;
 import com.aguo.vo.params.MeterReadingItem;
 import com.aguo.vo.params.MeterReadingParam;
 import com.aguo.vo.params.PageParam;
@@ -70,7 +71,7 @@ public class MeterReadingServiceImpl extends ServiceImpl<MeterReadingDao, MeterR
         try {
             ArchiRRoom room = archiRRoomService.getById(meterReading.getRoomId());
             if (room == null) {
-                throw new RuntimeException("房屋不存在");
+                return ApiResponse.error("房屋不存在");
             }
             if (ObjectUtils.isEmpty(meterReading.getReadingDate())) {
                 meterReading.setReadingDate(new Date());
@@ -82,14 +83,23 @@ public class MeterReadingServiceImpl extends ServiceImpl<MeterReadingDao, MeterR
         } catch (Exception e) {
             return ApiResponse.error("房屋不存在");
         }
-        int insert = meterReadingDao.insert(meterReading);
-        return ApiResponse.booleanResponse(insert > 0, "水电记录插入失败");
+        try {
+            int insert = meterReadingDao.insert(meterReading);
+            return ApiResponse.booleanResponse(insert > 0, "水电记录插入失败");
+        } catch (Exception e) {
+            return ApiResponse.error("该房屋在当前日期重复记录");
+        }
+
     }
 
     @Override
     public ApiResponse updateMeterReading(MeterReading meterReading) {
-        int i = meterReadingDao.updateById(meterReading);
-        return ApiResponse.booleanResponse(i > 0, "水电记录更新失败");
+        try {
+            int i = meterReadingDao.updateById(meterReading);
+            return ApiResponse.booleanResponse(i > 0, "水电记录更新失败");
+        } catch (Exception e) {
+            return ApiResponse.error("该房屋在当前日期重复记录");
+        }
     }
 
     @Override
@@ -182,7 +192,10 @@ public class MeterReadingServiceImpl extends ServiceImpl<MeterReadingDao, MeterR
 
 
     @Override
-    public ApiResponse handleList(List<MeterReadingItem> meterReadingItems) {
-        return ApiResponse.success();
+    public ApiResponse handleList(MeterReadingExcelParam meterReadingExcelParam) {
+        List<MeterReadingItem> list = meterReadingExcelParam.getMeterReadingExcelParam();
+        Date readingDate = meterReadingExcelParam.getReadingDate();
+        Integer count = meterReadingDao.insertOrUpdateMeterReading(list, readingDate);
+        return ApiResponse.success(count);
     }
 }

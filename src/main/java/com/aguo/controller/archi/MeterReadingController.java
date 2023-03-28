@@ -59,7 +59,6 @@ public class MeterReadingController {
 
     @PostMapping("/handleList")
     public ApiResponse handleList(@RequestBody MeterReadingExcelParam meterReadingExcelParam) {
-        System.out.println(meterReadingExcelParam);
-        return meterReadingService.handleList(meterReadingExcelParam.getMeterReadingExcelParam());
+        return meterReadingService.handleList(meterReadingExcelParam);
     }
 }

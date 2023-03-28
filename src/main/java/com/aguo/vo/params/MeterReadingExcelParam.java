@@ -2,6 +2,7 @@ package com.aguo.vo.params;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,4 +13,5 @@ import java.util.List;
 @Data
 public class MeterReadingExcelParam {
     List<MeterReadingItem> meterReadingExcelParam;
+    Date readingDate;
 }

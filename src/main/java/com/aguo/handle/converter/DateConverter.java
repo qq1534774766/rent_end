@@ -16,6 +16,11 @@ public class DateConverter implements Converter<String, Date> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

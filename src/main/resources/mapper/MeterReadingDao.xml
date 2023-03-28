@@ -42,6 +42,17 @@
 
 
     </select>
+    <select id="insertOrUpdateMeterReading" resultType="java.lang.Integer">
+        insert into meter_reading (ROOM_ID, READING_DATE, WATER_READING, ELECTRICITY_READING)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roomId}, #{readingDate}, #{item.waterReading}, #{item.electricityReading})
+        </foreach>
+        on duplicate key update
+        WATER_READING = values(WATER_READING),
+        ELECTRICITY_READING = values(ELECTRICITY_READING)
+
+    </select>
     <sql id="QueryMeterReadingSql">
         select
         r1.ID,r1.ROOM_ID,r1.WATER_READING,r1.ELECTRICITY_READING,r1.READING_DATE,
