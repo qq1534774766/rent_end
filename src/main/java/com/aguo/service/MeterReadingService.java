@@ -6,6 +6,10 @@ import com.aguo.vo.params.MeterReadingParam;
 import com.aguo.vo.params.PageParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+
 /**
  * @author Administrator
  * @description 针对表【meter_reading】的数据库操作Service
@@ -45,4 +49,13 @@ public interface MeterReadingService extends IService<MeterReading> {
      * @return
      */
     ApiResponse deleteMeterReading(Integer meterReadingId);
+
+    /**
+     * 获取Excel模板
+     * 表头：BuildingName，roomId，houseNumber,waterReading,electricity_reading
+     *
+     * @param buildingId
+     * @param response
+     */
+    void downloadExcelTemplate(Integer buildingId, Date readingDate, HttpServletResponse response) throws IOException;
 }

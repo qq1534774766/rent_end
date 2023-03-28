@@ -8,6 +8,10 @@ import com.aguo.vo.params.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+
 /**
  * @Author: wenqiaogang
  * @DateTime: 2023/3/27 11:04
@@ -41,5 +45,15 @@ public class MeterReadingController {
         return meterReadingService.deleteMeterReading(id);
     }
 
+    /**
+     * 获取Excel批量录入模板
+     *
+     * @param response
+     * @throws IOException
+     */
+    @GetMapping("/downloadExcel")
+    public void downloadExcelTemplate(Integer buildingId, Date readingDate, HttpServletResponse response) throws IOException {
+        meterReadingService.downloadExcelTemplate(buildingId, readingDate, response);
 
+    }
 }

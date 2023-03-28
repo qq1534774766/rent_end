@@ -1,6 +1,7 @@
 package com.aguo.dao;
 
 import com.aguo.entity.MeterReading;
+import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,4 +45,12 @@ public interface MeterReadingDao extends BaseMapper<MeterReading> {
      * @return
      */
     Long countQueryMeterReading(String buildingName, String houseNumber, Integer year, Integer month);
+
+    /**
+     * 根据楼盘ID查出所有房屋信息
+     *
+     * @param buildingId
+     * @return
+     */
+    List<MeterReadingExcelVo> fetchMeterReadingExcelVo(Integer buildingId, Integer year, Integer month, Integer day);
 }

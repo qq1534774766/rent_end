@@ -24,6 +24,24 @@
         select count(*) from
         (<include refid="QueryMeterReadingSql"/>) r1
     </select>
+    <select id="fetchMeterReadingExcelVo" resultType="com.aguo.vo.MeterReadingExcelVo">
+        select abb.BUILDING_ID, abb.NAME BUILDING_NAME,
+        arr.ROOM_ID, arr.HOUSE_NUMBER,
+        mr.WATER_READING,mr.ELECTRICITY_READING,mr.READING_DATE
+        from archi_r_room arr
+        join archi_b_building abb
+        on arr.BUILDING_ID = abb.BUILDING_ID
+        left join meter_reading mr
+        on arr.ROOM_ID = mr.ROOM_ID
+        <if test="year != null and month != null and day != null">
+            and year(mr.READING_DATE)=#{year} and month(mr.READING_DATE)=#{month} and day(mr.READING_DATE)=#{day}
+        </if>
+        <if test="buildingId != null and buildingId != ''">
+            where arr.BUILDING_ID = #{buildingId}
+        </if>
+
+
+    </select>
     <sql id="QueryMeterReadingSql">
         select
         r1.ID,r1.ROOM_ID,r1.WATER_READING,r1.ELECTRICITY_READING,r1.READING_DATE,
