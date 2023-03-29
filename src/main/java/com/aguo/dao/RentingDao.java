@@ -4,7 +4,11 @@ import com.aguo.entity.Renting;
 import com.aguo.entity.vol.RentingVol;
 import com.aguo.vo.RentingWeek;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.aguo.entity.Renting;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 租房关系表(Renting)表数据库访问层
@@ -12,6 +16,8 @@ import com.aguo.entity.Renting;
  * @author makejava
  * @since 2021-11-20 16:27:43
  */
+@Mapper
+@Repository
 public interface RentingDao extends BaseMapper<Renting> {
     /**
      * 所有的房屋状态
