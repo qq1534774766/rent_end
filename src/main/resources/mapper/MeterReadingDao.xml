@@ -72,8 +72,8 @@
                      SUM(WATER_READING)       AS WATER_USAGE,
                      SUM(ELECTRICITY_READING) AS ELECTRICITY_USAGE
               FROM METER_READING
-              WHERE MONTH(READING_DATE) = MONTH(#{date}) - 1
-                AND YEAR(READING_DATE) = YEAR(#{date})
+              WHERE MONTH(READING_DATE) = IF(MONTH(#{date}) = 1, 12, MONTH(#{date}) - 1)
+                AND YEAR(READING_DATE) = IF(MONTH(#{date}) = 1, YEAR(#{date}) - 1, YEAR(#{date}))
               GROUP BY ROOM_ID) AS PREV
              ON CURR.ROOM_ID = PREV.ROOM_ID
                  JOIN ARCHI_R_ROOM ARR ON ARR.ROOM_ID = CURR.ROOM_ID

@@ -10,26 +10,21 @@ import com.aguo.entity.vol.RenterItemVol;
 import com.aguo.entity.vol.UUserVol;
 import com.aguo.service.RenterService;
 import com.aguo.service.UUserService;
-import com.aguo.untils.NumberUntil;
 import com.aguo.untils.ValidatorUtil;
 import com.aguo.vo.ApiResponse;
-import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RenterParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -57,17 +52,17 @@ public class RenterServiceImpl implements RenterService {
         //新建一个page对象
         Page<UUserVol> page = new Page<>(pageNo, pageSize);
         LambdaQueryWrapper<UUserVol> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(renterParam.getUsername()),UUserVol::getUsername,renterParam.getUsername())
-                .like(NumberUntil.isNumber(renterParam.getName()),UUserVol::getName,renterParam.getName())
-                .like(NumberUntil.isNumber(renterParam.getPhoneNumber()),UUserVol::getPhoneNumber,renterParam.getPhoneNumber());
-        uUserVolDao.selectPage(page,queryWrapper);
+        queryWrapper.like(StringUtils.isNotBlank(renterParam.getUsername()), UUserVol::getUsername, renterParam.getUsername())
+                .like(StringUtils.isNotBlank(renterParam.getName()), UUserVol::getName, renterParam.getName())
+                .like(StringUtils.isNotBlank(renterParam.getPhoneNumber()), UUserVol::getPhoneNumber, renterParam.getPhoneNumber());
+        uUserVolDao.selectPage(page, queryWrapper);
         List<UUserVol> list1 = page.getRecords();
         for (UUserVol uUserVol : list1) {
             RenterItemVol renterItemVol = new RenterItemVol();
             Boolean rentState = rentingService.renterRentState(uUserVol.getUserId());
             //筛选是否租房的前端的条件。
             if(renterParam.getRentState()!=null&&
-                    !renterParam.getRentState().equals(rentState)){
+                    !renterParam.getRentState().equals(rentState)) {
                 //有筛选时，与筛选不同则过滤掉不要
                 continue;
             }
@@ -77,7 +72,11 @@ public class RenterServiceImpl implements RenterService {
             renterItemVol.setuRole(uRole);
             list.add(renterItemVol);
         }
-        return ApiResponse.success(list);
+        Integer count = uUserVolDao.selectCount(queryWrapper);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        map.put("count", count);
+        return ApiResponse.success(map);
     }
 
     /**

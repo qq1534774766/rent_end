@@ -1,6 +1,5 @@
 package com.aguo.controller;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,10 +21,10 @@ public class RouterController {
      * @return
      */
     @RequestMapping({"/","index.html","toLogin"})
-    @ResponseBody
-    public  String toIndex(){
-//        return "index";
-        return "<h3>欢迎使用出租房管理系统后端API，请通过前端访问！</h3>";
+//    @ResponseBody
+    public  String toIndex() {
+        return "index";
+//        return "<h3>欢迎使用出租房管理系统后端API，请通过前端访问！</h3>";
     }
 
     /**
