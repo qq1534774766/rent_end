@@ -45,6 +45,12 @@
         SELECT COUNT(*) FROM (
         <include refid="queryAllRoom"/>) AS T
     </select>
+    <select id="roomCountInBuilding" resultType="com.aguo.vo.BuildingRoomVo">
+        select arr.BUILDING_ID,abb.name building_name,count(*) roomCount
+        from archi_r_room arr
+        left join archi_b_building abb on arr.BUILDING_ID = abb.BUILDING_ID
+        group by arr.BUILDING_ID
+    </select>
 
     <sql id="queryAllRoom">
         SELECT ARR.ROOM_ID,

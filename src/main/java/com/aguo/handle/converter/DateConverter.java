@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Administrator
+ */
 @Component
 public class DateConverter implements Converter<String, Date> {
     @Override
@@ -14,12 +17,14 @@ public class DateConverter implements Converter<String, Date> {
         try {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(source);
         } catch (ParseException e) {
-            e.printStackTrace();
         }
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(source);
         } catch (ParseException e) {
-            e.printStackTrace();
+        }
+        try {
+            return new SimpleDateFormat("yyyy-MM").parse(source);
+        } catch (ParseException e) {
         }
         return null;
     }

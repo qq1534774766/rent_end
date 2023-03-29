@@ -63,5 +63,12 @@ public interface ArchiRRoomService extends IService<ArchiRRoom> {
      * @return
      */
     ApiResponse listRoomByBuildingId(Integer buildingId);
+
+    /**
+     * 获取所有的楼房一下的房屋数量
+     *
+     * @return
+     */
+    ApiResponse roomCountInBuilding();
 }
 

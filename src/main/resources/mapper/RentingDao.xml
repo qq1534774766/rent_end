@@ -49,6 +49,20 @@
         from renting
         where RENTING_ID = #{rentingId,jdbcType=INTEGER}
     </select>
+    <select id="rentingWeek" resultType="com.aguo.vo.RentingWeek">
+        SELECT DATE(dates.date) AS date, COUNT(renting.room_id) AS rent_count
+FROM
+    (
+        SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY AS date
+        FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+                 CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+                 CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+    ) AS dates
+        LEFT JOIN renting ON dates.date = DATE(renting.CREATED_TIME)
+WHERE dates.date BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()
+GROUP BY dates.date;
+
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from renting

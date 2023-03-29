@@ -2,6 +2,7 @@ package com.aguo.dao;
 
 import com.aguo.entity.ArchiRRoom;
 import com.aguo.entity.vol.RoomItemVolV2;
+import com.aguo.vo.BuildingRoomVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -65,5 +66,12 @@ public interface ArchiRRoomDao extends BaseMapper<ArchiRRoom> {
     Integer queryAllRoomInfoCount(@Param("buildingName") String buildingName,
                                   @Param("houseNumber") String houseNumber,
                                   @Param("rentState") String rentState);
+
+    /**
+     * 统计每个楼房下的房屋数量
+     *
+     * @return
+     */
+    List<BuildingRoomVo> roomCountInBuilding();
 }
 

@@ -14,6 +14,7 @@ import com.aguo.service.RentingService;
 import com.aguo.service.UUserService;
 import com.aguo.untils.code.ParamUntil;
 import com.aguo.vo.ApiResponse;
+import com.aguo.vo.BuildingRoomVo;
 import com.aguo.vo.params.PageParam;
 import com.aguo.vo.params.RoomParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -169,6 +170,12 @@ public class ArchiRRoomServiceImpl
         LambdaQueryWrapper<ArchiRRoom> lqw = new LambdaQueryWrapper<>();
         lqw.eq(ArchiRRoom::getBuildingId, buildingId);
         List<ArchiRRoom> list = archiRRoomDao.selectList(lqw);
+        return ApiResponse.success(list);
+    }
+
+    @Override
+    public ApiResponse roomCountInBuilding() {
+        List<BuildingRoomVo> list = archiRRoomDao.roomCountInBuilding();
         return ApiResponse.success(list);
     }
 }

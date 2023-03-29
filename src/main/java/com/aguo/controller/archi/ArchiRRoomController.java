@@ -78,6 +78,11 @@ public class ArchiRRoomController extends ApiController {
         return archiRRoomService.listRoomByBuildingId(buildingId);
     }
 
+    @GetMapping("/roomCountInBuilding")
+    public ApiResponse roomCountInBuilding() {
+        return archiRRoomService.roomCountInBuilding();
+    }
+
 
 }
 

@@ -61,4 +61,10 @@ public class MeterReadingController {
     public ApiResponse handleList(@RequestBody MeterReadingExcelParam meterReadingExcelParam) {
         return meterReadingService.handleList(meterReadingExcelParam);
     }
+
+    @GetMapping("/waterAndElectricityRank")
+    public ApiResponse waterAndElectricityRank(@RequestParam("date") Date date) {
+        System.out.println(date);
+        return meterReadingService.waterAndElectricityRank(date);
+    }
 }

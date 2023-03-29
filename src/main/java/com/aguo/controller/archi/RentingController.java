@@ -10,10 +10,7 @@ import com.aguo.entity.vol.RentingVol;
 import com.aguo.service.RentingService;
 import com.aguo.vo.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 租用关系
@@ -29,6 +26,11 @@ public class RentingController {
     @PutMapping("/renting")
     public ApiResponse handleRenting(@RequestBody RentingVol rentingVol) {
         return rentingService.handleRenting(rentingVol);
+    }
+
+    @GetMapping("/rentingWeek")
+    public ApiResponse rentingWeek() {
+        return rentingService.rentingWeek();
     }
 
 }

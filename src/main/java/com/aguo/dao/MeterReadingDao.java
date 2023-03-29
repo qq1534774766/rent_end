@@ -3,6 +3,7 @@ package com.aguo.dao;
 import com.aguo.entity.MeterReading;
 import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
+import com.aguo.vo.WaterAndElectricityRankVo;
 import com.aguo.vo.params.MeterReadingItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -65,4 +66,12 @@ public interface MeterReadingDao extends BaseMapper<MeterReading> {
      * @return
      */
     Integer insertOrUpdateMeterReading(@Param("list") List<MeterReadingItem> list, @Param("readingDate") Date readingDate);
+
+    /**
+     * 获取每个月的用水电量
+     *
+     * @param date
+     * @return
+     */
+    List<WaterAndElectricityRankVo> waterAndElectricityRank(@Param("date") Date date);
 }

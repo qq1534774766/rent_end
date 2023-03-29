@@ -41,5 +41,7 @@ public interface RentingService extends IService<Renting> {
      * @return
      */
     ApiResponse handleRenting(RentingVol rentingVol);
+
+    ApiResponse rentingWeek();
 }
 

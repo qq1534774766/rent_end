@@ -1,5 +1,8 @@
 package com.aguo.dao;
 
+import com.aguo.entity.Renting;
+import com.aguo.entity.vol.RentingVol;
+import com.aguo.vo.RentingWeek;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.aguo.entity.Renting;
 
@@ -36,5 +39,6 @@ public interface RentingDao extends BaseMapper<Renting> {
     int updateByPrimaryKey(Renting record);
 
 
+    List<RentingWeek> rentingWeek();
 }
 

@@ -68,4 +68,11 @@ public interface MeterReadingService extends IService<MeterReading> {
      */
     ApiResponse handleList(MeterReadingExcelParam meterReadingExcelParam);
 
+    /**
+     * 获取当月的用水量
+     *
+     * @param date
+     * @return
+     */
+    ApiResponse waterAndElectricityRank(Date date);
 }

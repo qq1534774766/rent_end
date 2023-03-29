@@ -9,6 +9,7 @@ import com.aguo.service.MeterReadingService;
 import com.aguo.vo.ApiResponse;
 import com.aguo.vo.MeterReadingExcelVo;
 import com.aguo.vo.MeterReadingVo;
+import com.aguo.vo.WaterAndElectricityRankVo;
 import com.aguo.vo.params.MeterReadingExcelParam;
 import com.aguo.vo.params.MeterReadingItem;
 import com.aguo.vo.params.MeterReadingParam;
@@ -197,5 +198,11 @@ public class MeterReadingServiceImpl extends ServiceImpl<MeterReadingDao, MeterR
         Date readingDate = meterReadingExcelParam.getReadingDate();
         Integer count = meterReadingDao.insertOrUpdateMeterReading(list, readingDate);
         return ApiResponse.success(count);
+    }
+
+    @Override
+    public ApiResponse waterAndElectricityRank(Date date) {
+        List<WaterAndElectricityRankVo> list = meterReadingDao.waterAndElectricityRank(date);
+        return ApiResponse.success(list);
     }
 }

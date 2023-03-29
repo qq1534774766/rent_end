@@ -10,6 +10,7 @@ import com.aguo.service.ArchiRRoomService;
 import com.aguo.service.RentingService;
 import com.aguo.service.UUserService;
 import com.aguo.vo.ApiResponse;
+import com.aguo.vo.RentingWeek;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -163,6 +164,12 @@ public class RentingServiceImpl extends ServiceImpl<RentingDao, Renting> impleme
             type = CREATE_TIME_AND_STOP_TIME_BOTH_ERROR;
         }
         return type;
+    }
+
+    @Override
+    public ApiResponse rentingWeek() {
+        List<RentingWeek> list = rentingDao.rentingWeek();
+        return ApiResponse.success(list);
     }
 }
 

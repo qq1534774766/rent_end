@@ -53,6 +53,34 @@
         ELECTRICITY_READING = values(ELECTRICITY_READING)
 
     </select>
+    <select id="waterAndElectricityRank" resultType="com.aguo.vo.WaterAndElectricityRankVo">
+        SELECT ABB.NAME                                           BUILDING_NAME,
+               CURR.ROOM_ID,
+               ARR.HOUSE_NUMBER,
+               MONTH(#{date}),
+               CURR.WATER_USAGE - PREV.WATER_USAGE             AS WATER_READING,
+               CURR.ELECTRICITY_USAGE - PREV.ELECTRICITY_USAGE AS ELECTRICITY_READING
+        FROM (SELECT ROOM_ID,
+                     SUM(WATER_READING)       AS WATER_USAGE,
+                     SUM(ELECTRICITY_READING) AS ELECTRICITY_USAGE
+              FROM METER_READING
+              WHERE MONTH(READING_DATE) = MONTH(#{date})
+                AND YEAR(READING_DATE) = YEAR(#{date})
+              GROUP BY ROOM_ID) AS CURR
+                 JOIN
+             (SELECT ROOM_ID,
+                     SUM(WATER_READING)       AS WATER_USAGE,
+                     SUM(ELECTRICITY_READING) AS ELECTRICITY_USAGE
+              FROM METER_READING
+              WHERE MONTH(READING_DATE) = MONTH(#{date}) - 1
+                AND YEAR(READING_DATE) = YEAR(#{date})
+              GROUP BY ROOM_ID) AS PREV
+             ON CURR.ROOM_ID = PREV.ROOM_ID
+                 JOIN ARCHI_R_ROOM ARR ON ARR.ROOM_ID = CURR.ROOM_ID
+                 JOIN ARCHI_B_BUILDING ABB ON ARR.BUILDING_ID = ABB.BUILDING_ID
+        order by ELECTRICITY_READING
+        limit 10
+    </select>
     <sql id="QueryMeterReadingSql">
         select
         r1.ID,r1.ROOM_ID,r1.WATER_READING,r1.ELECTRICITY_READING,r1.READING_DATE,
